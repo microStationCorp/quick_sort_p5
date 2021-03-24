@@ -1,8 +1,10 @@
 let width = 600;
 let height = 600;
 let data = [];
-let w = 2;
+let w = 5;
 let nums = 0;
+let low;
+let high;
 
 function setup() {
   createCanvas(width, height);
@@ -20,6 +22,11 @@ function draw() {
 function draw_bar() {
   background(51);
   for (let i = 0; i < nums; i++) {
+    if (i >= low && i <= high) {
+      fill(0, 255, 0);
+    } else {
+      fill(255);
+    }
     rect(i * w, height - data[i], w, data[i]);
   }
 }
@@ -44,6 +51,8 @@ async function partition(l, h) {
   return j;
 }
 async function qs(l, h) {
+  low = l;
+  high = h;
   if (l < h) {
     var j = await partition(l, h);
     await qs(l, j);
@@ -52,7 +61,7 @@ async function qs(l, h) {
 }
 
 async function swap(a, b) {
-  await sleep(100);
+  await sleep(200);
   var temp = data[a];
   data[a] = data[b];
   data[b] = temp;
